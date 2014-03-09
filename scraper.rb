@@ -65,7 +65,6 @@ for element in states
                 c=c+resultsperpage
                 puts c
                 scraping.css("item").each do |result|
-                  puts "try"
                   identification=result.css('link').inner_html
                   identification.to_s()
                   identification=identification.split("-").last
@@ -190,8 +189,6 @@ for element in states
            }
           
   
-
-  
          
 
           if data["salary"]!=''
@@ -208,28 +205,21 @@ for element in states
                 data["geo"]=geo[ident]
                 
               end
-              s=''
 
-              begin
-            
-                s= ScraperWiki::sqliteexecute("select long_description from swdata where id=(?)", [ident])
-                ScraperWiki::commit()
-              puts s              
-              k = s["data"]
-              k=k.to_s()
-              if k.length<10
-                puts "..."
-                ScraperWiki::save_sqlite(["id"], data)
-              end
-              rescue
-                 puts"?!?!"
-                  ScraperWiki::save_sqlite(["id"], data)
-               
+              
+                  puts data
+                  ScraperWiki.save_sqlite(['id'], data)
+                  puts "success"
+
+              
+              
+
+             
              end
 
            end
       end
-   end
+   
      j=j + resultsperpage
   end
 end
